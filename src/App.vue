@@ -33,10 +33,10 @@ ul {
   margin: 0;
 }
 
-/* Style the list items */
+
 ul li {
   border: 1px solid #ddd;
-  margin-top: -1px; /* Prevent double borders */
+  margin-top: -1px;
   background-color: white;
  
   text-decoration: none;
@@ -46,7 +46,7 @@ ul li {
   position: relative;
 }
 
-/* Add a light grey background color on hover */
+
 ul li:hover {
   background-color: #eee;
 }

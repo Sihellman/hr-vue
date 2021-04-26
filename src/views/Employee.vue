@@ -272,7 +272,6 @@ let employee_object = employee;
           for (let i = 0; i < this.employees.length; i++) {
             if (parseInt(x) === this.employees[i].employee_id) {
               this.employees.splice(i, 1);
-              console.log("yay");
             }
           }
         });
