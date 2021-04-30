@@ -52,7 +52,7 @@
           <td>{{ employee.email }}</td>
           <td>{{ employee.name }}</td>
           <td><button v-on:click="getScores(employee)">scores</button></td>
-          <dialog id="recipe-detail">
+          <dialog id="employee-detail">
             <form method="dialog">
               <button class="btb">Close</button>
               <table id="inner-table">
@@ -131,11 +131,10 @@ var axios = require("axios");
 export default {
   data: function() {
     return {
-      message: "Welcome to Vue.js!",
       employees: [],
       url: "http://localhost/project2/data_p2.php",
-      newEmployee: {},
-      currentEmployee: {},
+      newEmployee: {}, //employee created in form
+      currentEmployee: {},//employee selected in order to edit
       jobs: [],
       comps: [],
       scores: [],
@@ -148,20 +147,7 @@ export default {
   },
   methods: {
     getScores: function(employee) {
-      const compParams = new URLSearchParams();
-      let comps = [];
-      compParams.append("mode", "getlinks");
-      compParams.append("type", "job");
-      compParams.append("job_id", employee.job_id);
-
-      axios
-        .post(this.url, compParams)
-        .then((response) => {
-          for (let i = 0; i < response.data.length; i++) {
-            this.comps.push(response.data[i]);
-            comps.push(response.data[i]);
-        
-          }
+      
           const scoreParams = new URLSearchParams();
       scoreParams.append("mode", "getlinks");
       scoreParams.append("type", "job");
@@ -182,10 +168,12 @@ export default {
           }
         });
 
-      document.querySelector("#recipe-detail").showModal();
-        });
+      document.querySelector("#employee-detail").showModal();
+       
     },
     addJobNameToEmployeeObject: function(employee){
+      //an employee object, when created, only has the job_id, because a select box was used, and 
+      //an API call would be necessary in order to retreive the job name. 
 let employee_object = employee;
 
       let name = "";
@@ -205,18 +193,17 @@ let employee_object = employee;
         return employee_object;
     },
     close: function() {
+      //resetting the arrays in case another employee will be selected to view the scores and competencies
       this.scores.length = 0;
       this.comps.length = 0;
     },
     showForm: function(employee) {
 
-      
+      //the employee only has the job_id, so the job name must be made an attribute of employee in order to be displayed
       this.currentEmployee = this.addJobNameToEmployeeObject(employee);
       document.querySelector("#form-edit").showModal();
     },
     createEmployee: function(currentEmployee) {
-      console.log("Create the recipe...");
-
       const params = new URLSearchParams();
       params.append("mode", "save");
       params.append("type", "employee");
